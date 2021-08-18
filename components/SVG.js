@@ -1,5 +1,293 @@
 import * as React from "react"
-import Svg, { G, Path, Defs, RadialGradient, Stop, Circle } from "react-native-svg"
+import Svg, { G, Path, ClipPath, Defs, RadialGradient, LinearGradient, Stop, Circle } from "react-native-svg"
+
+
+export function CrossButton(props) {
+    return (
+        <Svg
+            width={props.width}
+            height={props.height}
+            viewBox="0 0 45 45"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}>
+            <G filter="url(#prefix__filter0_d)">
+                <Circle cx={22.705} cy={20.701} r={20} fill="#fff" />
+                <Circle
+                    cx={22.705}
+                    cy={20.701}
+                    r={19.453}
+                    stroke="#000"
+                    strokeOpacity={0.02}
+                    strokeWidth={1.093}
+                />
+            </G>
+            <Path
+                d="M16.36 14.763L29.05 27.08m-.06-12.378L16.42 27.14"
+                stroke="#CF482A"
+                strokeWidth={4.23}
+                strokeLinecap="round"
+            />
+            <Defs></Defs>
+        </Svg>
+    );
+}
+
+
+export function SettinIcon(props) {
+    return (
+        <Svg
+            {...props}
+            width={22}
+            height={22}
+            viewBox="0 0 22 22"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <G
+                clipPath="url(#prefix__clip0)"
+                stroke="#979797"
+                strokeWidth={1.75}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            >
+                <Path d="M11.1 13.425a2.625 2.625 0 100-5.25 2.625 2.625 0 000 5.25z" />
+                <Path d="M17.575 13.425a1.444 1.444 0 00.289 1.593l.052.052a1.752 1.752 0 11-2.476 2.477l-.053-.053a1.444 1.444 0 00-1.592-.288 1.444 1.444 0 00-.875 1.32v.15a1.75 1.75 0 11-3.5 0v-.08a1.444 1.444 0 00-.945-1.32 1.444 1.444 0 00-1.593.288l-.052.053a1.749 1.749 0 01-2.856-.568 1.75 1.75 0 01.38-1.909l.052-.052a1.444 1.444 0 00.289-1.592 1.443 1.443 0 00-1.321-.876h-.149a1.75 1.75 0 110-3.5h.079a1.444 1.444 0 001.321-.944 1.444 1.444 0 00-.289-1.593l-.052-.052A1.75 1.75 0 116.76 4.054l.052.053a1.444 1.444 0 001.593.289h.07a1.444 1.444 0 00.875-1.322v-.148a1.75 1.75 0 113.5 0v.078a1.443 1.443 0 00.875 1.322 1.444 1.444 0 001.593-.29l.052-.052a1.75 1.75 0 012.856.568 1.751 1.751 0 01-.38 1.909l-.052.052a1.444 1.444 0 00-.289 1.593v.07a1.444 1.444 0 001.321.875h.149a1.75 1.75 0 010 3.5h-.079a1.444 1.444 0 00-1.321.874v0z" />
+            </G>
+            <Defs>
+                <ClipPath id="prefix__clip0">
+                    <Path fill="#fff" transform="translate(.6 .3)" d="M0 0h21v21H0z" />
+                </ClipPath>
+            </Defs>
+        </Svg>
+    )
+}
+
+
+export function ViewButton(props) {
+    return (
+        <Svg
+            {...props}
+            width={26}
+            height={19}
+            viewBox="0 0 26 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <Path
+                d="M1.416 9.512S5.59 1.45 12.897 1.45c7.307 0 11.482 8.062 11.482 8.062s-4.175 8.062-11.482 8.062c-7.306 0-11.481-8.062-11.481-8.062z"
+                stroke="#400142"
+                strokeWidth={2.419}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <Path
+                d="M13.297 12.535c1.73 0 3.132-1.354 3.132-3.023 0-1.67-1.402-3.024-3.132-3.024-1.729 0-3.13 1.354-3.13 3.024s1.401 3.023 3.13 3.023z"
+                stroke="#400142"
+                strokeWidth={2.419}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </Svg>
+    )
+}
+
+
+export function Elipsis(props) {
+    return (
+        <Svg
+            {...props}
+            width={24}
+            height={8}
+            viewBox="0 0 24 8"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <Circle cx={3.111} cy={4} r={3.111} fill="#F5F5F5" />
+            <Circle cx={12} cy={4} r={3.111} fill="#F5F5F5" />
+            <Circle cx={20.889} cy={4} r={3.111} fill="#F5F5F5" />
+        </Svg>
+    )
+}
+
+
+
+export function ArrowTopRight(props) {
+    return (
+        <Svg
+            {...props}
+            width={16}
+            height={17}
+            viewBox="0 0 16 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <Path
+                d="M14.326 2.662v8.916M5.147 2.4h8.916M12.07 4.603L2.6 13.828"
+                stroke="#F5F5F5"
+                strokeWidth={3.147}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </Svg>
+    )
+}
+export function QRCode(props) {
+    return (
+        <Svg
+            {...props}
+            width={35}
+            height={35}
+            viewBox="0 0 35 35"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <Circle opacity={0.2} cx={17.5} cy={17.5} r={17.5} fill="#fff" />
+            <Path
+                d="M10.8 20.34v4.7M15.287 25.04H10.8M10.8 15.3v-4.7M15.287 10.6H10.8M24.608 15.3v-4.7M20.121 10.6h4.487M24.608 20.34v4.7M20.121 25.04h4.487"
+                stroke="#fff"
+                strokeWidth={2.196}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </Svg>
+    )
+}
+
+
+
+export function GameDigitBackground(props) {
+    return (
+        <Svg
+            width={65}
+            height={108}
+            viewBox="0 0 65 108"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G filter="url(#prefix__filter0_i)">
+                <Path
+                    d="M57.43 0H7.37A7.19 7.19 0 00.18 7.19v93.02a7.19 7.19 0 007.19 7.19h50.06a7.19 7.19 0 007.19-7.19V7.19A7.19 7.19 0 0057.43 0z"
+                    fill="#DA9B7C"
+                    fillOpacity={0.3}
+                />
+            </G>
+            <Path
+                opacity={0.2}
+                d="M58.176 6.444H6.624v94.512h51.552V6.444z"
+                fill="url(#prefix__paint0_linear)"
+            />
+            <Defs>
+                <LinearGradient
+                    id="prefix__paint0_linear"
+                    x1={32.401}
+                    y1={131.933}
+                    x2={32.401}
+                    y2={-20.896}
+                    gradientUnits="userSpaceOnUse"
+                >
+                    <Stop stopColor="#925A25" />
+                    <Stop offset={0.133} stopColor="#925A25" />
+                    <Stop offset={0.152} stopColor="#965F26" />
+                    <Stop offset={0.177} stopColor="#A26D29" />
+                    <Stop offset={0.205} stopColor="#B7862D" />
+                    <Stop offset={0.23} stopColor="#D3A732" />
+                    <Stop offset={0.234} stopColor="#CFA231" />
+                    <Stop offset={0.262} stopColor="#BD8A2D" />
+                    <Stop offset={0.29} stopColor="#B27B2B" />
+                    <Stop offset={0.321} stopColor="#AB732A" />
+                    <Stop offset={0.358} stopColor="#A97029" />
+                    <Stop offset={0.412} stopColor="#B27C31" />
+                    <Stop offset={0.519} stopColor="#C9A04F" />
+                    <Stop offset={0.661} stopColor="#F8E38C" />
+                    <Stop offset={0.698} stopColor="#DFC271" />
+                    <Stop offset={0.779} stopColor="#B18139" />
+                    <Stop offset={0.815} stopColor="#9D6728" />
+                    <Stop offset={0.837} stopColor="#996228" />
+                    <Stop offset={0.865} stopColor="#8D542A" />
+                    <Stop offset={0.887} stopColor="#81462B" />
+                </LinearGradient>
+            </Defs>
+        </Svg>
+    )
+}
+
+
+
+export function Outer(props) {
+    return (
+        <Svg
+            width={52}
+            height={95}
+            viewBox="0 0 52 95"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <Path
+                opacity={0.2}
+                d="M51.796.444H.244v94.512h51.552V.444z"
+                fill="url(#prefix__paint0_linear)"
+            />
+            <Defs>
+                <LinearGradient
+                    id="prefix__paint0_linear"
+                    x1={26.02}
+                    y1={125.933}
+                    x2={26.02}
+                    y2={-26.896}
+                    gradientUnits="userSpaceOnUse"
+                >
+                    <Stop stopColor="#925A25" />
+                    <Stop offset={0.133} stopColor="#925A25" />
+                    <Stop offset={0.152} stopColor="#965F26" />
+                    <Stop offset={0.177} stopColor="#A26D29" />
+                    <Stop offset={0.205} stopColor="#B7862D" />
+                    <Stop offset={0.23} stopColor="#D3A732" />
+                    <Stop offset={0.234} stopColor="#CFA231" />
+                    <Stop offset={0.262} stopColor="#BD8A2D" />
+                    <Stop offset={0.29} stopColor="#B27B2B" />
+                    <Stop offset={0.321} stopColor="#AB732A" />
+                    <Stop offset={0.358} stopColor="#A97029" />
+                    <Stop offset={0.412} stopColor="#B27C31" />
+                    <Stop offset={0.519} stopColor="#C9A04F" />
+                    <Stop offset={0.661} stopColor="#F8E38C" />
+                    <Stop offset={0.698} stopColor="#DFC271" />
+                    <Stop offset={0.779} stopColor="#B18139" />
+                    <Stop offset={0.815} stopColor="#9D6728" />
+                    <Stop offset={0.837} stopColor="#996228" />
+                    <Stop offset={0.865} stopColor="#8D542A" />
+                    <Stop offset={0.887} stopColor="#81462B" />
+                </LinearGradient>
+            </Defs>
+        </Svg>
+    )
+}
+
+
+export function Border(props) {
+    return (
+        <Svg
+            width={65}
+            height={108}
+            viewBox="0 0 65 108"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G filter="url(#prefix__filter0_i)">
+                <Path
+                    d="M57.25 0H7.19A7.19 7.19 0 000 7.19v93.02a7.19 7.19 0 007.19 7.19h50.06a7.19 7.19 0 007.19-7.19V7.19A7.19 7.19 0 0057.25 0z"
+                    fill="#DA9B7C"
+                    fillOpacity={0.3}
+                />
+            </G>
+            <Defs></Defs>
+        </Svg>
+    )
+}
+
 
 export function RadialGradientSVG(props) {
     return (
