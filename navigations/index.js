@@ -17,8 +17,8 @@ export default function App() {
     <>
       <NavigationContainer>
         <Stack.Navigator
-          // initialRouteName={user ? 'Home' : 'Form'}
-          initialRouteName='Test'
+          initialRouteName={user ? 'Home' : 'Form'}
+          // initialRouteName='Test'
           screenOptions={{ headerShown: false, animationEnabled: false }}>
           <Stack.Screen name="Form" component={Form} />
           <Stack.Screen name="Home" component={Home} />

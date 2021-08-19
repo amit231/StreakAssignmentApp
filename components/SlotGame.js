@@ -5,7 +5,9 @@ import { ForwardArrow, Burger, Store, SavingIcon, GameDigitBackground } from '..
 import ViewBackground from './ViewBackground'
 import Button from './Button'
 import DisplayCardAction from './DisplayCardAction'
-
+const SLOT_HEIGHT = 108
+const SLOT_WIDTH = 65
+const BORDER_SIZE = 8;
 
 const SlotGame = ({ id,
     type,
@@ -20,20 +22,10 @@ const SlotGame = ({ id,
         <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 
             <View style={styles.fancyGoal}>
-
-                {data.count.split("").map(single => <ViewBackground
+                {data.count.split("").map(single => <Slot
+                    text={single}
                     key={v4()}
-                    height={108}
-                    width={65}
-                    renderBackground={(style) => <GameDigitBackground
-                        width='100%'
-                        height='100%'
-                        preserveAspectRatio="xMinYMin slice"
-                        style={style} />
-                    }
-                    containerStyles={styles.viewBackground}>
-                    <Text style={styles.biggerText}>{single}</Text>
-                </ViewBackground>)}
+                />)}
             </View >
             <Text style={styles.gamePromo}>
                 Win prizes worth {data.prizeWorth} or more.
@@ -47,90 +39,31 @@ const SlotGame = ({ id,
 
 }
 export default SlotGame;
-const iconMappings = {
-    'Food & Drinks': <Burger />,
-    'Store sale': <Store />,
-    'Money credited': <SavingIcon />
-}
 
-const DataList = ({ type, data, user }) => {
-    function isGreen(am) {
-        if (am[0] === '+') {
-            return { color: '#00600A' }
+function Slot(text) {
+    console.log(text, 'it is single')
+    return <ViewBackground
+        height={SLOT_HEIGHT}
+        width={SLOT_WIDTH}
+        renderBackground={(style) => <GameDigitBackground
+            width='100%'
+            height='100%'
+            preserveAspectRatio="xMinYMin slice"
+            style={style} />
         }
-    }
-    switch (type) {
-        case '01':
-            return <View >
-                {data.transatctions.map(transcation => <View
-                    key={transcation.at}
-                    style={styles.simpleListItem}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <View
-                            style={{ marginRight: 16 }}>
-                            {iconMappings[transcation.title]}
-                        </View>
-                        <View >
-                            <Text
-                                style={styles.simpleListTitle}>
-                                {transcation.title}</Text>
-                            <Text
-                                style={styles.simpleListAt}>
-                                {transcation.at}</Text>
-                        </View>
-
-                    </View>
-                    <View>
-                        <Text
-                            style={[styles.simpleListAmount, isGreen(transcation.amount)]}>
-                            {transcation.amount}
-                        </Text>
-                    </View>
-                </View>)}
-            </View>
-        case '02':
-            return <View style={{ width: '100%' }}>
-                <Text style={styles.monthSaving}>Saved a total of <Text style={{ color: '#192247', opacity: 0.9 }}>{data.monthSaving}</Text> this month
-                    and is close to achieving one goal</Text>
-                {data.goals.map(goal => <View key={goal.title} style={styles.outer}>
-                    <View style={styles.inner}>
-                        <Text style={styles.goalTitle}>{goal.title}</Text>
-                        <Text style={styles.goalSaved}>{goal.saved} saved <Text style={styles.goalAmount}>of {goal.amount} goal</Text></Text>
-                    </View>
-                </View>)}
-            </View>
-        case '03':
-            return <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-
-                <View style={styles.fancyGoal}>
-
-                    {data.count.split("").map(single => <ViewBackground
-                        key={v4()}
-                        height={108}
-                        width={65}
-                        renderBackground={(style) => <GameDigitBackground
-                            width='100%'
-                            height='100%'
-                            preserveAspectRatio="xMinYMin slice"
-                            style={style} />
-                        }
-                        containerStyles={styles.viewBackground}>
-                        <Text style={styles.biggerText}>{single}</Text>
-                    </ViewBackground>)}
-                </View >
-                <Text style={styles.gamePromo}>
-                    Win prizes worth {data.prizeWorth} or more.
-                </Text>
-                <Button style={styles.fadeButton} onPress={e => console.log(e)}>
-                    <Text style={styles.buttonText}>Try your luck</Text>
-                </Button>
-
-            </View>
-        default:
-            return null
-
-    }
+        containerStyles={styles.viewBackground}>
+        <View style={styles.foreground}>
+            <Text
+                style={{
+                    ...styles.biggerText,
+                    transform: [{ translateY: 0 }]
+                }}>
+                {text.text}
+            </Text>
+        </View>
+    </ViewBackground>
 }
+
 
 
 
@@ -145,7 +78,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'rgba(0,0,0,0.9)',
         marginBottom: 3,
-
 
     },
     simpleListAmount: {
@@ -262,6 +194,8 @@ const styles = StyleSheet.create({
 
     },
     viewBackground: {
+        width: '100%',
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -276,5 +210,13 @@ const styles = StyleSheet.create({
         color: '#AB604F',
         opacity: 0.8,
         marginBottom: 20.8
+    },
+    foreground: {
+        width: SLOT_WIDTH - BORDER_SIZE,
+        height: SLOT_HEIGHT - BORDER_SIZE,
+        overflow: 'hidden',
+        backgroundColor: 'red',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

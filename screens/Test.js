@@ -3,26 +3,34 @@ import { View, useWindowDimensions, StyleSheet, Text, Animated, TouchableOpacity
 // import { Easing } from 'react-native-reanimated';
 import Button from '../components/Button'
 
-const Duration = 500;
-const Test = ({ navigation }) => {
+const Duration = 300;
+const AnimationDuration = 4000;
+const HowSlowYouWantToEnd = 10
+
+
+
+
+const Test = ({ navigation, lastChar = 8 }) => {
     const dim = useWindowDimensions();
-    // console.log('hurray')
     const [transformYval, setTransformYval] = useState(0);
-    const [number, setNumber] = useState(2)
+    const [slow, setSlow] = useState(0)
     const Timer = useRef()
+    const TextRef = useRef();
+    const AutoTimerRef = useRef()
+    TextRef.current = Math.floor(Math.random() * 10)
     useEffect(() => {
-        if (transformYval !== 0) {
+        if (transformYval !== 0 && transformYval !== '0') {
             Animated.timing(transformYval, {
-                toValue: 52,
-                duration: Duration,
-                useNativeDriver: false,
-                // easing: Easing.inOut
+                toValue: 62,
+                duration: Duration + slow * (Duration / HowSlowYouWantToEnd),
+                useNativeDriver: true,
+                easing: Easing.linear
             }).start()
-            console.log(transformYval)
-            setNumber(Math.floor(Math.random() * 10))
+            console.log(slow)
             Timer.current = setTimeout(() => {
-                setTransformYval(new Animated.Value(-52))
-            }, Duration)
+                setSlow(slow => slow + 1)
+                setTransformYval(new Animated.Value(-62))
+            }, Duration + slow * (Duration / HowSlowYouWantToEnd))
         }
         return () => {
             clearInterval(Timer.current)
@@ -32,12 +40,19 @@ const Test = ({ navigation }) => {
 
 
     function toggleAnimation() {
+        setSlow(0)
         console.log('clicke')
-        if (transformYval === 0) {
-            setTransformYval(new Animated.Value(-52))
+        if (transformYval === 0 || transformYval === '0') {
+            setTransformYval(new Animated.Value(-62))
+            AutoTimerRef.current = setTimeout(() => {
+                clearInterval(Timer.current)
+                setTransformYval('0')
+            }, AnimationDuration)
+
         } else {
+            clearInterval(AutoTimerRef.current)
             clearInterval(Timer.current)
-            setTransformYval(0)
+            setTransformYval('0')
         }
     }
 
@@ -52,8 +67,8 @@ const Test = ({ navigation }) => {
                     fontWeight: '700',
                     // lineHeight: 26,
                     // backgroundColor: 'red',
-                    transform: [{ translateY: transformYval }]
-                }}>{number}</Animated.Text>
+                    transform: [{ translateY: transformYval === '0' ? 0 : transformYval }]
+                }}>{transformYval === '0' ? lastChar : TextRef.current}</Animated.Text>
             </View>
         </View>
         <TouchableOpacity style={styles.fadeButton} onPress={toggleAnimation}>
