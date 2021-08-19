@@ -101,12 +101,18 @@ const Card = ({ cardHeight = 419, navigation }) => {
     const dispatchToRedux = useDispatch();
 
     const userState = useSelector(state => state.usersReducer)
-    const user = userState?.firstName
+    let user;
+    if (userState && userState.firstName && userState.firstName !== '') {
+        user = userState.firstName;
+    } else {
+        user = 'Andy'
+    }
 
     function logoutHandler() {
         dispatchToRedux(removeUserData())
         navigation.replace('Form')
     }
+
     console.log(userState)
     return <ScrollView>
         <ViewBackground
@@ -155,12 +161,9 @@ const Card = ({ cardHeight = 419, navigation }) => {
                     animation='fadeIn'
                     delay={CARD_IN + BUTTON_MAIN_IN}
                     duration={BUTTONS_IN}>
-                    {/* <View style={{ display: 'flex', flexDirection: 'row' }}> */}
-
                     <Button style={styles.fadeButton} onPress={e => console.log(e)}>
                         <Elipsis />
                     </Button>
-                    {/* </View> */}
                 </Animatable.View>
             </View>
 

@@ -92,11 +92,9 @@ const UserForm = ({ navigation }) => {
       behavior="padding">
       <ScrollView>
         <View style={{
-        ...styles.container,
-        // flex: 1,
-          // backgroundColor: 'red',
-        minHeight: dimensions.height,
-        minWidth: dimensions.width,
+          ...styles.container,
+          minHeight: dimensions.height,
+          minWidth: dimensions.width,
         }}>
         <View style={styles.profileFormHeader}>
 

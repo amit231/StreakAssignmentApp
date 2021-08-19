@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 import Form from '../screens/Form'
 import Home from '../screens/Home';
-
+import Test from '../screens/Test'
 const Stack = createStackNavigator();
 export default function App() {
   const dim = useWindowDimensions();
@@ -17,10 +17,12 @@ export default function App() {
     <>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={user ? 'Home' : 'Form'}
+          // initialRouteName={user ? 'Home' : 'Form'}
+          initialRouteName='Test'
           screenOptions={{ headerShown: false, animationEnabled: false }}>
           <Stack.Screen name="Form" component={Form} />
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Test" component={Test} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
