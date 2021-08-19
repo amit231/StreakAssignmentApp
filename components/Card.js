@@ -103,7 +103,7 @@ const Card = ({ cardHeight = 419, navigation }) => {
 
     // state for slot game 
     const [data, setData] = useState({
-        count: [],
+        count: [2, 1, 2, 3],
         prizeWorth: '₹4000',
         btnText: 'Try Your Luck'
     })
@@ -192,10 +192,10 @@ const Card = ({ cardHeight = 419, navigation }) => {
             <Savings {...savingData} user={user} />
             <SlotGame {...gameData} user={user} data={data} />
         </Animatable.View>
-        <View style={{ width: '100%', marginTop: 40, position: 'relative' }}>
-            <View style={{ position: 'absolute', top: 0, right: 12, }}>
-                <Button style={{ backgroundColor: 'whitesmoke', height: 40, paddingHorizontal: 12, paddingLeft: 14, borderRadius: 20 }}>
-                    <Text style={{ fontWeight: '700', fontSize: 16, color: 'darkgrey' }}>Parental controls</Text><SettinIcon style={{ marginLeft: 10 }} />
+        <View style={styles.bottomDiv}>
+            <View style={styles.bottomContainer}>
+                <Button style={styles.bottomButton}>
+                    <Text style={styles.bottomBtnText}>Parental controls</Text><SettinIcon style={{ marginLeft: 10 }} />
                 </Button>
             </View>
             <ImageBackground source={BackgroundImage} resizeMode="stretch" style={styles.backgroungImage} ></ImageBackground>
@@ -210,9 +210,32 @@ const styles = StyleSheet.create({
         position: 'relative',
         backgroundColor: 'red'
     },
+    bottomBtnText: {
+        fontWeight: '700',
+        fontSize: 16,
+        color: 'darkgrey'
+    },
+    bottomDiv: {
+        width: '100%',
+        marginTop: 40,
+        position: 'relative'
+    },
     viewBackground: {
         paddingHorizontal: 12
     },
+    bottomContainer: {
+        position: 'absolute',
+        top: 0,
+        right: 12
+    },
+    bottomButton: {
+        backgroundColor: 'whitesmoke',
+        height: 40,
+        paddingHorizontal: 12,
+        paddingLeft: 14,
+        borderRadius: 20
+    },
+
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between'

@@ -40,6 +40,14 @@ const SlotGame = ({ id,
             })
     }, [clicked])
 
+
+    let disableStyle = {};
+    if (clicked) {
+        disableStyle = {
+            backgroundColor: 'grey'
+        }
+    }
+
     return <DisplayCardAction {...{ type, title, action, colors, user }}>
         <View style={styles.cardContent}>
 
@@ -53,7 +61,7 @@ const SlotGame = ({ id,
             <Text style={styles.gamePromo}>
                 Win prizes worth {data.prizeWorth} or more.
             </Text>
-            <Button style={styles.fadeButton} onPress={buttonClicked}>
+            <Button style={{ ...styles.fadeButton, ...disableStyle }} onPress={buttonClicked}>
                 <Text style={styles.buttonText}>Try your luck</Text>
             </Button>
 
