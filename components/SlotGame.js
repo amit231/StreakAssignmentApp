@@ -33,18 +33,18 @@ const SlotGame = ({ id,
         setClicked(true)
     }
 
-    useState(() => {
-        if (clicked)
-            setTimeout(() => {
-                setClicked(false)
-            })
-    }, [clicked])
+    // useState(() => {
+    //     if (clicked)
+    //         setTimeout(() => {
+    //             setClicked(false)
+    //         })
+    // }, [clicked])
 
 
     let disableStyle = {};
     if (clicked) {
         disableStyle = {
-            backgroundColor: 'grey'
+            backgroundColor: '#c58c7f'
         }
     }
 
@@ -289,7 +289,8 @@ const styles = StyleSheet.create({
     biggerText: {
         fontSize: 60,
         color: '#631E00',
-        fontWeight: '700'
+        fontWeight: '700',
+        opacity: 0.7
     },
     gamePromo: {
         fontSize: 18,

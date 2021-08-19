@@ -141,7 +141,7 @@ const Card = ({ cardHeight = 419, navigation }) => {
             containerStyles={[styles.viewBackground, { paddingTop: 49 }]}>
             <Animatable.View
                 animation='fadeIn'
-                delay={CARD_IN - 300}
+                delay={CARD_IN - 400}
                 duration={300}
                 style={styles.header}>
                 <Logo />
