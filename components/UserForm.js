@@ -84,17 +84,17 @@ const UserForm = ({ navigation }) => {
     if (formState.formIsValid) {
       const data = formState.inputValues;
       dispatchToRedux(addUserData(data.firstName, data.secondName, data.mobileNumber, data.email))
-      navigation.push('Home')
+      navigation.replace('Home')
     }
   }
   return (
     <KeyboardAvoidingView
-      behavior="padding"
-      keyboardVerticalOffset={45}>
+      behavior="padding">
       <ScrollView>
         <View style={{
         ...styles.container,
-        flex: 1,
+        // flex: 1,
+          // backgroundColor: 'red',
         minHeight: dimensions.height,
         minWidth: dimensions.width,
         }}>
@@ -170,8 +170,8 @@ const UserForm = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'flex-start',
+    // flex: 1,
+    // justifyContent: 'flex-start',
     paddingHorizontal: 18,
 
   },

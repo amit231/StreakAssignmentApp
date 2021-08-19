@@ -13,6 +13,7 @@ export default Form;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        // flex: 1
     }
 })
