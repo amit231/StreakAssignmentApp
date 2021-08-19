@@ -61,7 +61,7 @@ const SlotGame = ({ id,
             <Text style={styles.gamePromo}>
                 Win prizes worth {data.prizeWorth} or more.
             </Text>
-            <Button style={{ ...styles.fadeButton, ...disableStyle }} onPress={buttonClicked}>
+            <Button style={{ ...styles.fadeButton, ...disableStyle }} onPress={buttonClicked} disabled={clicked}>
                 <Text style={styles.buttonText}>Try your luck</Text>
             </Button>
 

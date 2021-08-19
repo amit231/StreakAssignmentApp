@@ -6,10 +6,11 @@ import { TouchableOpacity } from 'react-native';
 const Button = ({
     onPress,
     children,
-    style
+    style,
+    disabled
 }) => {
     return (
-        <TouchableOpacity style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', alignItems: 'center', ...style }} onPress={onPress}>
+        <TouchableOpacity style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', alignItems: 'center', ...style }} onPress={onPress} disabled={disabled}>
             {children}
         </TouchableOpacity>
     );

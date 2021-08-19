@@ -14,9 +14,9 @@ const Savings = ({ id,
     return <DisplayCardAction {...{ type, title, action, colors, user }}>
         <View style={{ width: '100%' }}>
             <Text style={styles.monthSaving}>
-                Saved a total of
+                Saved a total of &nbsp;
                 <Text style={{ color: '#192247', opacity: 0.9 }}>
-                    {data.monthSaving}
+                    {data.monthSaving}&nbsp;
                 </Text>
                 this month and is close to achieving one goal</Text>
             {data.goals.map(goal => <View key={goal.title} style={styles.outer}>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     monthSaving: {
         color: '#5682AB',
         fontWeight: '700',
-        fontSize: 18,
+        fontSize: 17.5,
         opacity: 0.9,
         marginLeft: 5,
         marginRight: 15,

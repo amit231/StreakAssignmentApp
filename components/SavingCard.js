@@ -86,7 +86,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         backgroundColor: 'whitesmoke',
         borderBottomRightRadius: 10,
-        borderBottomLeftRadius: 10
+        borderBottomLeftRadius: 10,
+        borderTopWidth: 2,
+        borderTopColor: 'rgba(233,211,233,0.3)'
     },
     smallerText: {
         color: '#9B9B9B',
