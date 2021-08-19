@@ -3,7 +3,7 @@ import { View, useWindowDimensions, StyleSheet, Text, Animated, TouchableOpacity
 // import { Easing } from 'react-native-reanimated';
 import Button from '../components/Button'
 
-const Duration = 300;
+const Duration = 200;
 const AnimationDuration = 4000;
 const HowSlowYouWantToEnd = 10
 
