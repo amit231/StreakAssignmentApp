@@ -9,9 +9,8 @@ import Home from '../screens/Home';
 const Stack = createStackNavigator();
 
 export default function App() {
-  const dim = useWindowDimensions();
+  // check for userState, if its there go to dashboard else to form
   const userState = useSelector(state => state.usersReducer);
-  console.log(userState)
   const user = userState?.firstName
   return (
     <>

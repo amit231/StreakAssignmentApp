@@ -7,13 +7,16 @@ import ViewBackground from './ViewBackground'
 import Button from './Button'
 import DisplayCardAction from './DisplayCardAction'
 
+// Slot configs
 const SLOT_HEIGHT = 108
 const SLOT_WIDTH = 65
 const BORDER_SIZE = 10;
 
+// Animation configs
 const Duration = 60;
 const AnimationDuration = 4000;
 const Offset = 70;
+
 
 const SlotGame = ({ id,
     type,
@@ -22,6 +25,8 @@ const SlotGame = ({ id,
     colors,
     user,
     data }) => {
+
+
     const [clicked, setClicked] = useState(false)
 
     function buttonClicked() {
@@ -63,13 +68,13 @@ function Slot({ text, clicked }) {
     // timer refs
     const Timer = useRef()
     const AutoTimerRef = useRef()
-    // ref for storing random numbers
     const TextRef = useRef();
-    // 0 => initial, '1'-> animation ended
+
+
+    // transformYval : 0-> not started, '1'-> ended
     const [transformYval, setTransformYval] = useState(0)
 
     TextRef.current = Math.floor(Math.random() * 10)
-
 
     function textGiver() {
         return transformYval === "1" ? text : TextRef.current
@@ -77,19 +82,20 @@ function Slot({ text, clicked }) {
 
     useEffect(() => {
         if (transformYval !== 0 && transformYval !== '0' && transformYval !== '1' && clicked) {
-            // start animation if button is clicked
+            // Animation starts on button press
             Animated.timing(transformYval, {
                 toValue: Offset,
                 duration: Duration,
                 useNativeDriver: true,
             }).start()
+
             // set timer for next frame
             Timer.current = setTimeout(() => {
                 setTransformYval(new Animated.Value(-Offset))
             }, Duration)
         }
         return () => {
-            // clear previous timer
+            // clear prev timers
             clearInterval(Timer.current)
         }
     }, [transformYval])
@@ -102,9 +108,9 @@ function Slot({ text, clicked }) {
         } else {
             setTransformYval(new Animated.Value(-Offset))
             setTimeout(() => {
-                // clear timers
+                // clear timer when animation completed
                 clearInterval(Timer.current)
-                // set State for displaying result
+                // update transformVal to '1' means animation ends
                 setTransformYval(transformYval => "1")
             }, AnimationDuration)
         }
