@@ -4,35 +4,54 @@ import { v4 } from 'uuid'
 import { ForwardArrow, Burger, Store, SavingIcon, GameDigitBackground } from '../components/SVG'
 import ViewBackground from './ViewBackground'
 import Button from './Button'
+import DisplayCardAction from './DisplayCardAction'
 
-
-const DisplayCardAction = ({ id,
+const Transactions = ({ id,
     type,
     title,
     action,
     colors,
-    user,
-    children }) => {
+    data,
+    user }) => {
     console.log(type)
+    function isGreen(am) {
+        if (am[0] === '+') {
+            return { color: '#00600A' }
+        }
+    }
 
-    return <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <View style={[styles.dataContainer, type === '02' ? { paddingRight: 11, paddingLeft: 12 } : type === '03' ? { paddingHorizontal: 13 } : {}]}>
-            <Text style={[styles.title, { color: colors.titleColor, marginLeft: type === '02' ? 5 : 0 }]}>
-                {type === '02' && `${user}'s `}{title}
-            </Text>
-            {/* <DataList {...{ type, data, user }} /> */}
-            {children}
-        </View>
-        <View style={[styles.bottomTextcontainer, { backgroundColor: colors.bottom }]}>
-            <Text style={[styles.bottomText, { color: colors.bottomTextColor }]}>
-                {action}&nbsp;
-            </Text>
-            <ForwardArrow style={{ marginTop: '1.5%' }} fill={colors.bottomTextColor} />
-        </View>
+    return <DisplayCardAction {...{ type, title, action, colors, user }}>
+        <View >
+            {data.transatctions.map(transcation => <View
+                key={transcation.at}
+                style={styles.simpleListItem}>
+                <View style={{ flexDirection: 'row' }}>
+                    <View
+                        style={{ marginRight: 16 }}>
+                        {iconMappings[transcation.title]}
+                    </View>
+                    <View >
+                        <Text
+                            style={styles.simpleListTitle}>
+                            {transcation.title}</Text>
+                        <Text
+                            style={styles.simpleListAt}>
+                            {transcation.at}</Text>
+                    </View>
 
-    </View>
+                </View>
+                <View>
+                    <Text
+                        style={[styles.simpleListAmount, isGreen(transcation.amount)]}>
+                        {transcation.amount}
+                    </Text>
+                </View>
+            </View>)}
+        </View>
+    </DisplayCardAction>
+
 }
-export default DisplayCardAction;
+export default Transactions;
 const iconMappings = {
     'Food & Drinks': <Burger />,
     'Store sale': <Store />,

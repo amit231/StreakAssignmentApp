@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, useWindowDimensions, StyleSheet } from 'react-native'
 import Card from '../components/Card'
-const Home = () => {
+const Home = ({ navigation }) => {
     const dim = useWindowDimensions();
 
     return <View style={[styles.container, { widtth: dim.width, height: dim.height }]}>
-        <Card />
+        <Card navigation={navigation} />
     </View>
 }
 export default Home;

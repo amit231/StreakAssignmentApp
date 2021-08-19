@@ -5,15 +5,20 @@ import {
   StyleSheet,
   useWindowDimensions,
   KeyboardAvoidingView,
-  Alert,
   ScrollView,
-  TouchableOpacity,
 } from 'react-native';
+
+import { addUserData } from '../actions';
 import { CrossButton } from './SVG';
 import InputField from './InputField';
 import Button from './Button';
+import { useDispatch } from 'react-redux';
+
+
+
 const UserForm = ({ navigation }) => {
   const dimensions = useWindowDimensions();
+  const dispatchToRedux = useDispatch();
   const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
   const formReducer = (state, action) => {
     if (action.type === FORM_INPUT_UPDATE) {
@@ -74,11 +79,13 @@ const UserForm = ({ navigation }) => {
     setShowValidation(true)
     console.log(navigation)
     if (formState.formIsValid) {
+      const data = formState.inputValues;
+      dispatchToRedux(addUserData(data.firstName, data.secondName, data.mobileNumber, data.email))
       navigation.push('Home')
     }
-
   }
   return (
+    <ScrollView>
     <KeyboardAvoidingView
       style={{
         ...styles.container,
@@ -87,15 +94,14 @@ const UserForm = ({ navigation }) => {
         minWidth: dimensions.width,
       }}
       behavior="padding"
-      keyboardVerticalOffset={45}>
-      <ScrollView>
+        keyboardVerticalOffset={45}>
         <View style={styles.profileFormHeader}>
 
           <View style={styles.heading}>
             <Text style={styles.headingText}>Profile</Text>
-            {/* <TouchableOpacity onPress={onCrossPress} style={{}}> */}
-            <CrossButton style={styles.crossButton} width={40} height={40} />
-            {/* </TouchableOpacity> */}
+            <TouchableOpacity onPress={onCrossPress} style={{}}>
+              <CrossButton style={styles.crossButton} width={40} height={40} />
+            </TouchableOpacity>
           </View>
           <Text style={styles.headerText}>
             Enter your details so we can get to know you better.
@@ -108,7 +114,6 @@ const UserForm = ({ navigation }) => {
               label="First Name*"
               keyboardType="default"
               required
-              // {...showValidations}
               showValidations={showValidations}
               onInputChange={inputChangeHandler}
               initialValue=""
@@ -125,12 +130,11 @@ const UserForm = ({ navigation }) => {
             <InputField
               id="email"
               autoCapitalize="none"
-              errorText="please enter a valid email address"
-              label="Email"
+              errorText="Please enter a valid email address"
+              label="Email*"
               keyboardType="email-address"
               required
               email
-              // {...showValidations}
               showValidations={showValidations}
 
               onInputChange={inputChangeHandler}
@@ -140,13 +144,10 @@ const UserForm = ({ navigation }) => {
               id="mobileNumber"
               autoCapitalize="none"
               errorText="Number must contain atleast 10 digits!"
-              label="Mobile Number"
+              label="Mobile Number*"
               keyboardType="number-pad"
               required
               min={10}
-              // minLength={10}
-              // {...showValidations}
-
               showValidations={showValidations}
               onInputChange={inputChangeHandler}
               initialValue=""
@@ -157,8 +158,8 @@ const UserForm = ({ navigation }) => {
         <Button style={styles.fadeButton} onPress={SubmitHandler}>
           <Text style={styles.buttonText}>Create Profile</Text>
         </Button>
-      </ScrollView>
     </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
@@ -166,7 +167,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    paddingHorizontal: 21,
+    paddingHorizontal: 18,
+
   },
   profileFormHeader: {
     paddingTop: 29,
@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
   headingText: {
     fontSize: 22,
     fontWeight: '700',
-    fontWeight: '600',
+    // fontWeight: '600',
     color: '#501761',
   },
 
@@ -189,14 +191,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     letterSpacing: 0,
+    fontWeight: '700',
+    color: '#646464',
     fontFamily: 'IBM Plex Sans',
+    paddingBottom: 30,
+    borderBottomWidth: 2,
+    borderBottomColor: 'rgba(229,229,229,0.5)',
   },
   userDetailsForm: {
-    paddingTop: 58,
+    paddingTop: 30,
     marginBottom: 18,
   },
   otpText: {
     textAlign: 'center',
+    fontSize: 16,
+    color: '#8A8A8A',
+    fontWeight: '700',
+    letterSpacing: -0.1
   },
   fadeButton: {
     width: '100%',

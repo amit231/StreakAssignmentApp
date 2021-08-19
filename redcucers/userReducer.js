@@ -1,28 +1,25 @@
-import { LOGOUT_USER, USER_LOGGEDIN, USER_LOGGEDIN_DEV, TEST } from "../actions/types";
+import { ADD_USER_DATA, REMOVE_USER_DATA } from "../actions/types";
 
-const INITIAL_STATE = null;
+const INITIAL_STATE = {
+    firstName: null,
+    lastName: null,
+    email: null,
+    phone: null
+};
+
 export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
-        case USER_LOGGEDIN:
+        case ADD_USER_DATA:
             console.log('dispatched')
             return {
                 ...state,
-                ...action.payload,
-                dev: false
+                ...action.payload
             }
-        case USER_LOGGEDIN_DEV:
+        case REMOVE_USER_DATA:
+            console.log('dispatched')
             return {
                 ...state,
-                ...action.payload,
-                dev: true
-            }
-        case 'LOGOUT':
-            return null;
-        case 'NOTIF_COUNT':
-            // console.warn('in reduxer')
-            return {
-                ...state,
-                count: action.payload
+                ...INITIAL_STATE
             }
         default:
             return state;

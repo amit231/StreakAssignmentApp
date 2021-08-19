@@ -1,38 +1,35 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { v4 } from 'uuid'
-import { ForwardArrow, Burger, Store, SavingIcon, GameDigitBackground } from '../components/SVG'
+import { ForwardArrow, Burger, Store, SavingIcon, GameDigitBackground } from './SVG'
 import ViewBackground from './ViewBackground'
 import Button from './Button'
+import DisplayCardAction from './DisplayCardAction'
 
-
-const DisplayCardAction = ({ id,
+const Savings = ({ id,
     type,
     title,
     action,
     colors,
-    user,
-    children }) => {
+    data,
+    user }) => {
     console.log(type)
 
-    return <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <View style={[styles.dataContainer, type === '02' ? { paddingRight: 11, paddingLeft: 12 } : type === '03' ? { paddingHorizontal: 13 } : {}]}>
-            <Text style={[styles.title, { color: colors.titleColor, marginLeft: type === '02' ? 5 : 0 }]}>
-                {type === '02' && `${user}'s `}{title}
-            </Text>
-            {/* <DataList {...{ type, data, user }} /> */}
-            {children}
+    return <DisplayCardAction {...{ type, title, action, colors, user }}>
+        <View style={{ width: '100%' }}>
+            <Text style={styles.monthSaving}>Saved a total of <Text style={{ color: '#192247', opacity: 0.9 }}>{data.monthSaving}</Text> this month
+                and is close to achieving one goal</Text>
+            {data.goals.map(goal => <View key={goal.title} style={styles.outer}>
+                <View style={styles.inner}>
+                    <Text style={styles.goalTitle}>{goal.title}</Text>
+                    <Text style={styles.goalSaved}>{goal.saved} saved <Text style={styles.goalAmount}>of {goal.amount} goal</Text></Text>
+                </View>
+            </View>)}
         </View>
-        <View style={[styles.bottomTextcontainer, { backgroundColor: colors.bottom }]}>
-            <Text style={[styles.bottomText, { color: colors.bottomTextColor }]}>
-                {action}&nbsp;
-            </Text>
-            <ForwardArrow style={{ marginTop: '1.5%' }} fill={colors.bottomTextColor} />
-        </View>
+    </DisplayCardAction>
 
-    </View>
 }
-export default DisplayCardAction;
+export default Savings;
 const iconMappings = {
     'Food & Drinks': <Burger />,
     'Store sale': <Store />,

@@ -59,12 +59,15 @@ const InputField = props => {
     console.log(isValid)
     dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
   };
+  let styleObj = {}
+
+  console.log(styleObj)
   return (
     <View style={styles.formControl}>
       <Text style={styles.label}>{props.label}</Text>
       <TextInput
         {...props}
-        style={styles.input}
+        style={[styles.input, styleObj]}
         onBlur={lostFocusHandler}
         value={inputState.value}
         onChangeText={textChangeHandler}
@@ -85,8 +88,10 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red'
   },
   label: {
-    fontFamily: 'open-sans-bold',
+    fontSize: 14,
+    fontWeight: '700',
     marginBottom: 12,
+    color: '#41536D'
   },
   input: {
     paddingHorizontal: 19,
@@ -95,13 +100,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginBottom: 20,
     height: 50,
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '700',
-    color: 'rgba(0,0,0,0.7)'
+    color: 'rgba(0,0,0,0.7)',
+    borderRadius: 6
   },
   errorContainer: {
     position: "absolute",
-    bottom: 0,
+    bottom: 3,
     left: 0,
     // margin: 1,
   },

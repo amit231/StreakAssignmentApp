@@ -1,18 +1,23 @@
 import React from 'react'
 import { View, useWindowDimensions, StyleSheet, ImageBackground, Text, ScrollView, TouchableOpacity } from 'react-native'
 import * as Animatable from 'react-native-animatable';
-
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { RadialGradientSVG, Logo, QRCode, ArrowTopRight, Elipsis, SettinIcon } from './SVG'
 import ViewBackground from './ViewBackground'
 import ProfileChip from './ProfileChip'
 import SavingCard from "./SavingCard";
-import DisplayCardAction from './DisplayCardAction'
 import BackgroundImage from '../assets/Image.png'
 import Button from './Button'
+import Transactions from './Transactions'
+import Savings from './Savings'
+import SlotGame from './SlotGame'
+import { removeUserData } from '../actions';
 
 
-const transactionData = {
+
+const transactionsData = {
     id: 1,
     title: 'Recent transactions',
     action: 'All transactions',
@@ -90,13 +95,22 @@ const BUTTON_MAIN_IN = 300;
 const BUTTONS_IN = 200;
 
 
-const Card = ({ height = 419 }) => {
+const Card = ({ cardHeight = 419, navigation }) => {
     const dim = useWindowDimensions();
     console.log(dim)
+    const dispatchToRedux = useDispatch();
 
+    const userState = useSelector(state => state.usersReducer)
+    const user = userState?.firstName
+
+    function logoutHandler() {
+        dispatchToRedux(removeUserData())
+        navigation.replace('Form')
+    }
+    console.log(userState)
     return <ScrollView>
         <ViewBackground
-            height={height}
+            height={cardHeight}
             renderBackground={(style) => <RadialGradientSVG
                 width='100%'
                 height='100%'
@@ -110,7 +124,9 @@ const Card = ({ height = 419 }) => {
                 duration={300}
                 style={styles.header}>
                 <Logo />
-                <ProfileChip name='Andy' image='https://media.istockphoto.com/photos/the-african-king-picture-id492611032?k=6&m=492611032&s=612x612&w=0&h=Y_CHJCbkFOqmXvHOYSdxu0T5UZqoRj7OzpIBLGkvf_Q=' />
+                <TouchableOpacity onPress={logoutHandler}>
+                    <ProfileChip name={user} image='https://media.istockphoto.com/photos/the-african-king-picture-id492611032?k=6&m=492611032&s=612x612&w=0&h=Y_CHJCbkFOqmXvHOYSdxu0T5UZqoRj7OzpIBLGkvf_Q=' />
+                </TouchableOpacity>
             </Animatable.View>
             <SavingCard />
             <View style={styles.spaceBetween}>
@@ -153,9 +169,12 @@ const Card = ({ height = 419 }) => {
             animation='fadeInUp'
             delay={CARD_IN + BUTTON_MAIN_IN + BUTTONS_IN}
             style={styles.viewBackground}>
-            <DisplayCardAction {...transactionData} />
-            <DisplayCardAction {...savingData} />
-            <DisplayCardAction {...gameData} />
+            {/* <DisplayCardAction {...transactionData} user={user} />
+            <DisplayCardAction {...savingData} user={user} />
+            <DisplayCardAction {...gameData} user={user} /> */}
+            <Transactions {...transactionsData} user={user} />
+            <Savings {...savingData} user={user} />
+            <SlotGame {...gameData} user={user} />
         </Animatable.View>
         <View style={{ width: '100%', marginTop: 40, position: 'relative' }}>
             <View style={{ position: 'absolute', top: 0, right: 12, }}>
