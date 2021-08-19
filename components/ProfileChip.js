@@ -32,9 +32,10 @@ const styles = StyleSheet.create({
         padding: 4,
         borderRadius: 32,
         flexDirection: 'row',
-        backgroundColor: '#430754',
+        backgroundColor: 'rgba(67, 7, 84, 0.65)',
         justifyContent: 'center',
         paddingRight: 7,
-        alignItems: 'center'
+        alignItems: 'center',
+        // opacity: 0.65
     }
 })
