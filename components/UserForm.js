@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   KeyboardAvoidingView,
   ScrollView,
+  TouchableOpacity
 } from 'react-native';
 
 import { addUserData } from '../actions';
@@ -20,6 +21,9 @@ const UserForm = ({ navigation }) => {
   const dimensions = useWindowDimensions();
   const dispatchToRedux = useDispatch();
   const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+  const [showValidations, setShowValidation] = useState(false)
+
+  // Main reducer for input updates 
   const formReducer = (state, action) => {
     if (action.type === FORM_INPUT_UPDATE) {
       const updatedValues = {
@@ -43,7 +47,6 @@ const UserForm = ({ navigation }) => {
     }
     return state;
   };
-  const [showValidations, setShowValidation] = useState(false)
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       firstName: '',
@@ -85,16 +88,16 @@ const UserForm = ({ navigation }) => {
     }
   }
   return (
-    <ScrollView>
     <KeyboardAvoidingView
-      style={{
+      behavior="padding"
+      keyboardVerticalOffset={45}>
+      <ScrollView>
+        <View style={{
         ...styles.container,
         flex: 1,
         minHeight: dimensions.height,
         minWidth: dimensions.width,
-      }}
-      behavior="padding"
-        keyboardVerticalOffset={45}>
+        }}>
         <View style={styles.profileFormHeader}>
 
           <View style={styles.heading}>
@@ -130,7 +133,7 @@ const UserForm = ({ navigation }) => {
             <InputField
               id="email"
               autoCapitalize="none"
-              errorText="Please enter a valid email address"
+                errorText="Please enter a valid email address!"
               label="Email*"
               keyboardType="email-address"
               required
@@ -158,8 +161,10 @@ const UserForm = ({ navigation }) => {
         <Button style={styles.fadeButton} onPress={SubmitHandler}>
           <Text style={styles.buttonText}>Create Profile</Text>
         </Button>
+        </View>
+
+      </ScrollView>
     </KeyboardAvoidingView>
-    </ScrollView>
   );
 };
 

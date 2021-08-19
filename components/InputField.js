@@ -23,7 +23,7 @@ const InputField = props => {
 
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue ? props.initialValue : '',
-    isValid: false,
+    isValid: !props.required,
     touched: true,
   });
   const { onInputChange, id } = props;
@@ -59,8 +59,11 @@ const InputField = props => {
     console.log(isValid)
     dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
   };
-  let styleObj = {}
 
+  let styleObj = {}
+  if (props.showValidations && !inputState.isValid && inputState.touched) {
+    styleObj = { borderColor: '#650F5C' }
+  }
   console.log(styleObj)
   return (
     <View style={styles.formControl}>
