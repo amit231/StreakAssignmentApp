@@ -10,7 +10,7 @@ import DisplayCardAction from './DisplayCardAction'
 // Slot configs
 const SLOT_HEIGHT = 108
 const SLOT_WIDTH = 65
-const BORDER_SIZE = 10;
+const BORDER_SIZE = 13;
 
 // Animation configs
 const Duration = 60;
