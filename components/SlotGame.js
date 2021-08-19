@@ -1,69 +1,54 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { View, StyleSheet, Text, Animated, Easing } from 'react-native'
+import { View, StyleSheet, Text, Animated } from 'react-native'
 import { v4 } from 'uuid'
-import { ForwardArrow, Burger, Store, SavingIcon, GameDigitBackground } from '../components/SVG'
+
+import { GameDigitBackground } from '../components/SVG'
 import ViewBackground from './ViewBackground'
 import Button from './Button'
 import DisplayCardAction from './DisplayCardAction'
+
 const SLOT_HEIGHT = 108
 const SLOT_WIDTH = 65
-const BORDER_SIZE = 8;
+const BORDER_SIZE = 10;
 
-const Duration = 300;
+const Duration = 60;
 const AnimationDuration = 4000;
-const HowSlowYouWantToEnd = 10
 const Offset = 70;
-const data = {
-    count: '1'
-}
+
 const SlotGame = ({ id,
     type,
     title,
     action,
     colors,
-    user }) => {
-    console.log(type)
-    const [transformYval, setTransformYval] = useState(0);
-    const [slow, setSlow] = useState(0)
-    const Timer = useRef()
-    const AutoTimerRef = useRef()
+    user,
+    data }) => {
+    const [clicked, setClicked] = useState(false)
 
-    function toggleAnimation() {
-        setSlow(0)
-        console.log('clicke')
-        if (transformYval === 0 || transformYval === '0') {
-            setTransformYval(new Animated.Value(-Offset))
-            AutoTimerRef.current = setTimeout(() => {
-                clearInterval(Timer.current)
-                setTransformYval('0')
-            }, AnimationDuration)
-
-        } else {
-            clearInterval(AutoTimerRef.current)
-            clearInterval(Timer.current)
-            setTransformYval('0')
-        }
+    function buttonClicked() {
+        setClicked(true)
     }
 
+    useState(() => {
+        if (clicked)
+            setTimeout(() => {
+                setClicked(false)
+            })
+    }, [clicked])
+
     return <DisplayCardAction {...{ type, title, action, colors, user }}>
-        <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <View style={styles.cardContent}>
 
             <View style={styles.fancyGoal}>
-                {data.count.split("").map(single => <Slot
+                {data.count.map(single => <Slot
                     text={single}
                     key={v4()}
-                    slow={slow}
-                    setSlow={setSlow}
-                    Timer={Timer}
-                    AutoTimerRef={AutoTimerRef}
-                    transformYval={transformYval}
-                    setTransformYval={setTransformYval}
+                    clicked={clicked}
                 />)}
             </View >
             <Text style={styles.gamePromo}>
                 Win prizes worth {data.prizeWorth} or more.
             </Text>
-            <Button style={styles.fadeButton} onPress={toggleAnimation}>
+            <Button style={styles.fadeButton} onPress={buttonClicked}>
                 <Text style={styles.buttonText}>Try your luck</Text>
             </Button>
 
@@ -73,60 +58,57 @@ const SlotGame = ({ id,
 }
 export default SlotGame;
 
-function Slot({
-    text,
-    transformYval,
-    setTransformYval,
-    Timer,
-    AutoTimerRef,
-    slow,
-    setSlow
-}) {
-    console.log(text, 'it is single')
+function Slot({ text, clicked }) {
 
-    // const [transformYval, setTransformYval] = useState(0);
-
+    // timer refs
+    const Timer = useRef()
+    const AutoTimerRef = useRef()
+    // ref for storing random numbers
     const TextRef = useRef();
+    // 0 => initial, '1'-> animation ended
+    const [transformYval, setTransformYval] = useState(0)
+
     TextRef.current = Math.floor(Math.random() * 10)
-    useEffect(() => {
-        if (transformYval !== 0 && transformYval !== '0') {
-            Animated.timing(transformYval, {
-                toValue: Offset,
-                duration: Duration + slow * (Duration / HowSlowYouWantToEnd),
-                useNativeDriver: true,
-                easing: Easing.linear
-            }).start()
-            console.log(slow)
-            Timer.current = setTimeout(() => {
-                setSlow(slow => slow + 1)
-                setTransformYval(new Animated.Value(-Offset))
-            }, Duration + slow * (Duration / HowSlowYouWantToEnd))
-        }
-        return () => {
-            clearInterval(Timer.current)
-        }
-
-    }, [transformYval])
 
 
-    function toggleAnimation() {
-        setSlow(0)
-        console.log('clicke')
-        if (transformYval === 0 || transformYval === '0') {
-            setTransformYval(new Animated.Value(-Offset))
-            AutoTimerRef.current = setTimeout(() => {
-                clearInterval(Timer.current)
-                setTransformYval('0')
-            }, AnimationDuration)
-
-        } else {
-            clearInterval(AutoTimerRef.current)
-            clearInterval(Timer.current)
-            setTransformYval('0')
-        }
+    function textGiver() {
+        return transformYval === "1" ? text : TextRef.current
     }
 
+    useEffect(() => {
+        if (transformYval !== 0 && transformYval !== '0' && transformYval !== '1' && clicked) {
+            // start animation if button is clicked
+            Animated.timing(transformYval, {
+                toValue: Offset,
+                duration: Duration,
+                useNativeDriver: true,
+            }).start()
+            // set timer for next frame
+            Timer.current = setTimeout(() => {
+                setTransformYval(new Animated.Value(-Offset))
+            }, Duration)
+        }
+        return () => {
+            // clear previous timer
+            clearInterval(Timer.current)
+        }
+    }, [transformYval])
 
+    useEffect(() => {
+        if (!clicked) {
+            clearInterval(AutoTimerRef.current)
+            clearInterval(Timer.current)
+
+        } else {
+            setTransformYval(new Animated.Value(-Offset))
+            setTimeout(() => {
+                // clear timers
+                clearInterval(Timer.current)
+                // set State for displaying result
+                setTransformYval(transformYval => "1")
+            }, AnimationDuration)
+        }
+    }, [clicked])
 
     return <ViewBackground
         height={SLOT_HEIGHT}
@@ -142,9 +124,9 @@ function Slot({
             <Animated.Text
                 style={{
                     ...styles.biggerText,
-                    transform: [{ translateY: transformYval === '0' ? 0 : transformYval }]
+                    transform: [{ translateY: (transformYval === '0' || transformYval === '1') ? 0 : transformYval }]
                 }}>
-                {transformYval === '0' ? text : TextRef.current}
+                {textGiver()}
             </Animated.Text>
         </View>
     </ViewBackground>
@@ -196,6 +178,12 @@ const styles = StyleSheet.create({
     bottomText: {
         fontWeight: 'bold',
         fontSize: 18,
+    },
+    cardContent: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     bottomTextcontainer: {
         height: 63,
@@ -258,7 +246,6 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     goalSaved: {
-        // color: '#31446B',
         fontWeight: 'bold',
         fontSize: 18,
         marginBottom: 7

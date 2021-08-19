@@ -5,13 +5,13 @@ import { ArrowDown } from '../components/SVG'
 
 
 const ProfileChip = ({ name, image }) => {
-
     return <View style={styles.container}>
         <Image source={{ uri: image }} style={styles.image} />
         <Text style={styles.name}>{name}</Text>
         <ArrowDown />
     </View>
 }
+
 export default ProfileChip;
 
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, useWindowDimensions, StyleSheet, ImageBackground, Text, ScrollView, TouchableOpacity } from 'react-native'
 import * as Animatable from 'react-native-animatable';
 import { useSelector } from 'react-redux';
@@ -14,7 +14,6 @@ import Transactions from './Transactions'
 import Savings from './Savings'
 import SlotGame from './SlotGame'
 import { removeUserData } from '../actions';
-
 
 
 const transactionsData = {
@@ -81,26 +80,20 @@ const gameData = {
         background: '#FBF7F5',
         bottom: '#F2E9E1'
     },
-    data: {
-        count: '8884',
-        prizeWorth: '₹4000',
-        btnText: 'Try Your Luck'
-    }
 }
 
 
-
+// Animation configurations
 const CARD_IN = 1500;
 const BUTTON_MAIN_IN = 300;
 const BUTTONS_IN = 200;
 
 
 const Card = ({ cardHeight = 419, navigation }) => {
-    const dim = useWindowDimensions();
-    console.log(dim)
     const dispatchToRedux = useDispatch();
-
     const userState = useSelector(state => state.usersReducer)
+
+    // fetch userName from redux store, if none is there than put default as Andy
     let user;
     if (userState && userState.firstName && userState.firstName !== '') {
         user = userState.firstName;
@@ -108,12 +101,34 @@ const Card = ({ cardHeight = 419, navigation }) => {
         user = 'Andy'
     }
 
+    // state for slot game 
+    const [data, setData] = useState({
+        count: [],
+        prizeWorth: '₹4000',
+        btnText: 'Try Your Luck'
+    })
+
     function logoutHandler() {
         dispatchToRedux(removeUserData())
         navigation.replace('Form')
     }
 
-    console.log(userState)
+    function getData() {
+        fetch('https://raw.githubusercontent.com/Streak-Tech/assigment/main/data.json', { method: "GET" }
+        )
+            .then((res) => res.json())
+            .then((res) => {
+                let oldData = data;
+                oldData.count = res.numbers
+                setData(oldData)
+            });
+    }
+
+    useEffect(() => {
+        getData();
+    }, [])
+
+
     return <ScrollView>
         <ViewBackground
             height={cardHeight}
@@ -172,12 +187,10 @@ const Card = ({ cardHeight = 419, navigation }) => {
             animation='fadeInUp'
             delay={CARD_IN + BUTTON_MAIN_IN + BUTTONS_IN}
             style={styles.viewBackground}>
-            {/* <DisplayCardAction {...transactionData} user={user} />
-            <DisplayCardAction {...savingData} user={user} />
-            <DisplayCardAction {...gameData} user={user} /> */}
+
             <Transactions {...transactionsData} user={user} />
             <Savings {...savingData} user={user} />
-            <SlotGame {...gameData} user={user} />
+            <SlotGame {...gameData} user={user} data={data} />
         </Animatable.View>
         <View style={{ width: '100%', marginTop: 40, position: 'relative' }}>
             <View style={{ position: 'absolute', top: 0, right: 12, }}>

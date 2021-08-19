@@ -2,13 +2,12 @@ import React from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import * as Animatable from 'react-native-animatable';
 
-
 import { CardBackground, ViewButton } from '../components/SVG'
 import ViewBackground from './ViewBackground'
 
 const BASE_DELAY = 500;
-const SavingCard = () => {
 
+const SavingCard = () => {
     return <Animatable.View
         animation='zoomIn'
         duration={1000}

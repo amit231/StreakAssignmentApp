@@ -1,6 +1,7 @@
 import * as React from "react"
 import Svg, { G, Path, ClipPath, Defs, RadialGradient, LinearGradient, Stop, Circle } from "react-native-svg"
 
+// Better version of Icons...
 
 export function CrossButton(props) {
     return (

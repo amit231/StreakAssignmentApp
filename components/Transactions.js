@@ -1,9 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-import { v4 } from 'uuid'
-import { ForwardArrow, Burger, Store, SavingIcon, GameDigitBackground } from '../components/SVG'
-import ViewBackground from './ViewBackground'
-import Button from './Button'
+import { Burger, Store, SavingIcon } from '../components/SVG'
+
 import DisplayCardAction from './DisplayCardAction'
 
 const Transactions = ({ id,
@@ -14,6 +12,7 @@ const Transactions = ({ id,
     data,
     user }) => {
     console.log(type)
+
     function isGreen(am) {
         if (am[0] === '+') {
             return { color: '#00600A' }
@@ -57,86 +56,6 @@ const iconMappings = {
     'Store sale': <Store />,
     'Money credited': <SavingIcon />
 }
-
-const DataList = ({ type, data, user }) => {
-    function isGreen(am) {
-        if (am[0] === '+') {
-            return { color: '#00600A' }
-        }
-    }
-    switch (type) {
-        case '01':
-            return <View >
-                {data.transatctions.map(transcation => <View
-                    key={transcation.at}
-                    style={styles.simpleListItem}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <View
-                            style={{ marginRight: 16 }}>
-                            {iconMappings[transcation.title]}
-                        </View>
-                        <View >
-                            <Text
-                                style={styles.simpleListTitle}>
-                                {transcation.title}</Text>
-                            <Text
-                                style={styles.simpleListAt}>
-                                {transcation.at}</Text>
-                        </View>
-
-                    </View>
-                    <View>
-                        <Text
-                            style={[styles.simpleListAmount, isGreen(transcation.amount)]}>
-                            {transcation.amount}
-                        </Text>
-                    </View>
-                </View>)}
-            </View>
-        case '02':
-            return <View style={{ width: '100%' }}>
-                <Text style={styles.monthSaving}>Saved a total of <Text style={{ color: '#192247', opacity: 0.9 }}>{data.monthSaving}</Text> this month
-                    and is close to achieving one goal</Text>
-                {data.goals.map(goal => <View key={goal.title} style={styles.outer}>
-                    <View style={styles.inner}>
-                        <Text style={styles.goalTitle}>{goal.title}</Text>
-                        <Text style={styles.goalSaved}>{goal.saved} saved <Text style={styles.goalAmount}>of {goal.amount} goal</Text></Text>
-                    </View>
-                </View>)}
-            </View>
-        case '03':
-            return <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-
-                <View style={styles.fancyGoal}>
-
-                    {data.count.split("").map(single => <ViewBackground
-                        key={v4()}
-                        height={108}
-                        width={65}
-                        renderBackground={(style) => <GameDigitBackground
-                            width='100%'
-                            height='100%'
-                            preserveAspectRatio="xMinYMin slice"
-                            style={style} />
-                        }
-                        containerStyles={styles.viewBackground}>
-                        <Text style={styles.biggerText}>{single}</Text>
-                    </ViewBackground>)}
-                </View >
-                <Text style={styles.gamePromo}>
-                    Win prizes worth {data.prizeWorth} or more.
-                </Text>
-                <Button style={styles.fadeButton} onPress={e => console.log(e)}>
-                    <Text style={styles.buttonText}>Try your luck</Text>
-                </Button>
-
-            </View>
-        default:
-            return null
-
-    }
-}
-
 
 
 const styles = StyleSheet.create({

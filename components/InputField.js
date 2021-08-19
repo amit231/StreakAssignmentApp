@@ -1,7 +1,16 @@
 import React, { useReducer, useEffect } from 'react';
-import { View, TextInput, Text, StyleSheet } from 'react-native';
+import {
+  View,
+  TextInput,
+  Text,
+  StyleSheet
+} from 'react-native';
+
+// types of input reducer
 const INPUT_CHANGE = 'INPUT_CHANGE';
 const INPUT_BLUR = 'INPUT_BLUR';
+
+// input reducer for handling input changes
 const inputReducer = (state, action) => {
   switch (action.type) {
     case INPUT_CHANGE:
@@ -19,20 +28,18 @@ const inputReducer = (state, action) => {
       return state;
   }
 };
+
+
 const InputField = props => {
+  const { onInputChange, id } = props;
 
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue ? props.initialValue : '',
     isValid: !props.required,
     touched: true,
   });
-  const { onInputChange, id } = props;
-  useEffect(() => {
-    if (inputState.touched) {
-      console.log(inputState)
-      onInputChange(id, inputState.value, inputState.isValid);
-    }
-  }, [inputState, onInputChange, id]);
+
+
   const lostFocusHandler = () => {
     dispatch({ type: INPUT_BLUR });
   };
@@ -60,11 +67,18 @@ const InputField = props => {
     dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
   };
 
+  useEffect(() => {
+    if (inputState.touched) {
+      console.log(inputState)
+      onInputChange(id, inputState.value, inputState.isValid);
+    }
+  }, [inputState, onInputChange, id]);
+
   let styleObj = {}
   if (props.showValidations && !inputState.isValid && inputState.touched) {
     styleObj = { borderColor: '#650F5C' }
   }
-  console.log(styleObj)
+
   return (
     <View style={styles.formControl}>
       <Text style={styles.label}>{props.label}</Text>

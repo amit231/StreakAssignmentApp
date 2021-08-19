@@ -1,10 +1,13 @@
 import React from 'react';
-import {
-    TouchableOpacity
-} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
-const Button = ({ onPress, children, style }) => {
-    // console.log('style is', style)
+
+// Button used in project
+const Button = ({
+    onPress,
+    children,
+    style
+}) => {
     return (
         <TouchableOpacity style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', alignItems: 'center', ...style }} onPress={onPress}>
             {children}

@@ -15,38 +15,40 @@ import InputField from './InputField';
 import Button from './Button';
 import { useDispatch } from 'react-redux';
 
+// form reducer types
+const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
+// form reducer
+const formReducer = (state, action) => {
+  if (action.type === FORM_INPUT_UPDATE) {
+    const updatedValues = {
+      ...state.inputValues,
+      [action.input]: action.value,
+    };
+    const updatedValidities = {
+      ...state.inputValidities,
+      [action.input]: action.isValid,
+    };
+    let updatedFormIsValid = true;
+    for (const key in updatedValidities) {
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+      console.log(updatedFormIsValid)
+    }
+    return {
+      formIsValid: updatedFormIsValid,
+      inputValues: updatedValues,
+      inputValidities: updatedValidities,
+    };
+  }
+  return state;
+};
 
 const UserForm = ({ navigation }) => {
   const dimensions = useWindowDimensions();
   const dispatchToRedux = useDispatch();
-  const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+
   const [showValidations, setShowValidation] = useState(false)
 
-  // Main reducer for input updates 
-  const formReducer = (state, action) => {
-    if (action.type === FORM_INPUT_UPDATE) {
-      const updatedValues = {
-        ...state.inputValues,
-        [action.input]: action.value,
-      };
-      const updatedValidities = {
-        ...state.inputValidities,
-        [action.input]: action.isValid,
-      };
-      let updatedFormIsValid = true;
-      for (const key in updatedValidities) {
-        updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
-        console.log(updatedFormIsValid)
-      }
-      return {
-        formIsValid: updatedFormIsValid,
-        inputValues: updatedValues,
-        inputValidities: updatedValidities,
-      };
-    }
-    return state;
-  };
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       firstName: '',
@@ -62,9 +64,11 @@ const UserForm = ({ navigation }) => {
     },
     formIsValid: false,
   });
+
   function onCrossPress() {
     navigation.push('Home')
   }
+
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
       dispatchFormState({
@@ -76,7 +80,7 @@ const UserForm = ({ navigation }) => {
     },
     [dispatchFormState],
   );
-  console.log(formState.inputValues);
+
   function SubmitHandler() {
     console.log(formState.formIsValid, ' it is validity of form')
     setShowValidation(true)
@@ -87,6 +91,7 @@ const UserForm = ({ navigation }) => {
       navigation.replace('Home')
     }
   }
+
   return (
     <KeyboardAvoidingView
       behavior="padding">
@@ -160,7 +165,6 @@ const UserForm = ({ navigation }) => {
           <Text style={styles.buttonText}>Create Profile</Text>
         </Button>
         </View>
-
       </ScrollView>
     </KeyboardAvoidingView>
   );
